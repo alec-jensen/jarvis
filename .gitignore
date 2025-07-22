@@ -10,6 +10,3 @@ wheels/
 .venv
 
 piper_voices/
-models/
-
-uv.lock

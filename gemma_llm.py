@@ -1,5 +1,5 @@
 
-from config import MODEL_PATH  # Use this for GGUF model path
+from config import MODEL_ID  # Use this for GGUF model path
 
 try:
     from llama_cpp import Llama
@@ -10,7 +10,7 @@ except ImportError:
 
 class GemmaLLM:
     def __init__(self, model_path=None, n_gpu_layers=-1, chat_format="chatml"):
-        self.model_path = model_path or MODEL_PATH  # MODEL_ID should be the GGUF file path
+        self.model_path = model_path or MODEL_ID  # MODEL_ID should be the GGUF file path
         self.n_gpu_layers = n_gpu_layers
         self.chat_format = chat_format
         print(f"Loading Gemma 3n GGUF model: {self.model_path} (n_gpu_layers={self.n_gpu_layers})...")
