@@ -3,7 +3,7 @@ import json
 import numpy as np
 import sounddevice as sd
 from piper.voice import PiperVoice
-from config import PIPER_MODEL_PATH, PIPER_CONFIG_PATH
+from jarvis.config import PIPER_MODEL_PATH, PIPER_CONFIG_PATH
 
 class PiperTTS:
     def __init__(self):

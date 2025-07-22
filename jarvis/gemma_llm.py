@@ -1,5 +1,5 @@
 
-from config import MODEL_ID  # Use this for GGUF model path
+from jarvis.config import MODEL_ID  # Use this for GGUF model path
 
 try:
     from llama_cpp import Llama
