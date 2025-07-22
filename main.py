@@ -1,7 +1,7 @@
 
-from jarvis.asr import AudioInput
-from jarvis.gemma_llm import GemmaLLM
-from jarvis.tts import PiperTTS
+from asr import AudioInput
+from gemma_llm import GemmaLLM
+from tts import PiperTTS
 
 # --- Main Orchestration ---
 def main():

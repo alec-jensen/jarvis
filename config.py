@@ -2,7 +2,7 @@ import torch
 import os
 
 # --- Model Configuration ---
-MODEL_ID = "google/gemma-3n-e2b-it"
+MODEL_PATH = "./models/gemma-3n-e2b-it"
 DEVICE = "cuda"
 DTYPE = torch.bfloat16 if DEVICE == "cuda" and torch.cuda.is_bf16_supported() else torch.float16 if DEVICE == "cuda" else torch.float32
 
