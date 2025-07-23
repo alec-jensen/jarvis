@@ -2,7 +2,7 @@ import torch
 import os
 
 # --- Model Configuration ---
-MODEL_ID = "google/gemma-3n-e2b-it"
+MODEL_ID = "google/gemma-3-4b-it"
 DEVICE = "cuda"
 DTYPE = torch.bfloat16 if DEVICE == "cuda" and torch.cuda.is_bf16_supported() else torch.float16 if DEVICE == "cuda" else torch.float32
 
@@ -11,7 +11,7 @@ SAMPLE_RATE = 16000
 CHANNELS = 1
 BUFFER_DURATION = 3
 RECORDING_BLOCK_SIZE = int(SAMPLE_RATE * 0.1)
-SPEAKING_THRESHOLD = 0.005
+SPEAKING_THRESHOLD = 0.8
 SILENCE_TIMEOUT_SECONDS = 1.5
 INITIAL_LISTENING_TIMEOUT = 5
 

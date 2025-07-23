@@ -1,6 +1,8 @@
 # setup
 
 ```bash
+sudo dnf install portaudio-devel
+
 uv sync
 
 cd piper_voices && python -m piper.download_voices en_GB-northern_english_male-medium

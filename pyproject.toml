@@ -14,5 +14,7 @@ dependencies = [
     "timm>=1.0.17",
     "transformers>=4.53.3",
     "triton>=3.3.1",
-    "llama-cpp-python>=0.3.14"
+    "flash-attn>=2.8.1",
+    "bitsandbytes>=0.46.1",
+    "librosa>=0.11.0",
 ]
