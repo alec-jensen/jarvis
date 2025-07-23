@@ -8,7 +8,9 @@ sudo dnf install portaudio-devel
 
 uv sync
 
-cd piper_voices && python -m piper.download_voices en_GB-northern_english_male-medium
+mkdir piper_voices
+cd piper_voices
+python -m piper.download_voices en_GB-northern_english_male-medium
 
 # install torch
 uv pip install torch torchvision torchaudio
