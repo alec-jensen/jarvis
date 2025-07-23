@@ -1,4 +1,7 @@
-# setup
+# jarvis
+ai voice assistant made with gemma 3 and piper
+
+## setup
 
 ```bash
 sudo dnf install portaudio-devel
