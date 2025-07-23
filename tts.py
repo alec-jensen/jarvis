@@ -21,7 +21,6 @@ class PiperTTS:
 
     def speak(self, text):
         print(f"Jarvis: {text}")
-        # Use PiperVoice.synthesize as a generator, concatenate all chunk.audio_int16_bytes
         audio_bytes = b''.join(chunk.audio_int16_bytes for chunk in self.voice.synthesize(text))
         audio_array = np.frombuffer(audio_bytes, dtype=np.int16)
         self.output_stream.write(audio_array)
