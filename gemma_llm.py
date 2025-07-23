@@ -7,6 +7,44 @@ from config import MODEL_ID, DTYPE, DEVICE, SAMPLE_RATE
 
 
 class GemmaLLM:
+    def process_audio_with_history(self, chat_history, audio_data, max_tokens=100):
+        """
+        Process chat history and current audio input using Gemma 3 multimodal model.
+        The last user message is audio; previous turns are text.
+        """
+        messages = [
+            {"role": "system", "content": [{"type": "text", "text": self.system_message}]}
+        ]
+        for msg in chat_history:
+            if msg["role"] == "user" and msg["content"] == "[audio input]":
+                # Placeholder for previous audio, skip or treat as text
+                messages.append({"role": "user", "content": [{"type": "text", "text": "[audio input]"}]})
+            elif msg["role"] == "user":
+                messages.append({"role": "user", "content": [{"type": "text", "text": msg["content"]}]})
+            elif msg["role"] == "assistant":
+                messages.append({"role": "assistant", "content": [{"type": "text", "text": msg["content"]}]})
+        # Add current audio as the latest user message
+        if audio_data is not None and (not hasattr(audio_data, 'size') or audio_data.size > 0):
+            messages.append({"role": "user", "content": [{"type": "audio", "audio": audio_data, "sampling_rate": SAMPLE_RATE}]})
+        inputs = self.processor.apply_chat_template(
+            messages,
+            tokenize=True,
+            return_dict=True,
+            return_tensors="pt",
+            add_generation_prompt=True,
+        ).to(self.model.device)
+        with torch.inference_mode(), torch.autocast(device_type="cuda", enabled=torch.cuda.is_available()):
+            outputs = self.model.generate(
+                **inputs,
+                max_new_tokens=max_tokens,
+                cache_implementation="static"
+            )
+        response = self.processor.decode(outputs[0], skip_special_tokens=True)
+        if "\n" in response:
+            lines = [line.strip() for line in response.split("\n") if line.strip()]
+            if lines:
+                return lines[-1]
+        return response.strip()
     def __init__(self, model_id=MODEL_ID, use_flash_attention=True):
         os.environ["TOKENIZERS_PARALLELISM"] = "false"
         self.model_id = model_id
@@ -56,7 +94,10 @@ class GemmaLLM:
             return ""
         # Compose chat message for audio input
         user_content = []
-        user_content.append({"type": "audio", "audio": audio_data, "sampling_rate": SAMPLE_RATE})
+        user_content.append([
+            {"type": "audio", "audio": audio_data, "sampling_rate": SAMPLE_RATE},
+            {"type": "text", "text": "Respond to this audio input." if not prompt_text else prompt_text}
+        ])
         messages = [
             {"role": "system", "content": [{"type": "text", "text": self.system_message}]},
             {"role": "user", "content": user_content},

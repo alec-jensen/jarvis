@@ -19,12 +19,12 @@ def main():
 
     def on_speech_end(audio_data):
         print(f"Processing {len(audio_data)/16000:.2f} seconds of audio...")
-        chat_history.append({"role": "user", "content": "[audio input]"})
-        chat_history[:] = chat_history[-10:]
-        response = llm.process_chat_history(chat_history, max_tokens=100)
+        # Pass chat history and audio to Gemma
+        response = llm.process_audio_with_history(chat_history, audio_data, max_tokens=100)
         print("Generating audio")
         if response:
             tts.speak(response)
+            chat_history.append({"role": "user", "content": "[audio input]"})
             chat_history.append({"role": "assistant", "content": response})
             chat_history[:] = chat_history[-10:]
         else:

@@ -1,5 +1,5 @@
 # jarvis
-ai voice assistant made with gemma 3 and piper
+ai voice assistant made with gemma 3n and piper
 
 ## setup
 
